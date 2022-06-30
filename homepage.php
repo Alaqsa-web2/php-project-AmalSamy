@@ -68,7 +68,17 @@ if (isset($_POST['subcomment'])) {
         </div>
 
         <div class="nav-right">
-        <img class="profile" src="<?php echo "$current_usr_img" ?>" alt="">
+        <?php
+            $sql3 = "SELECT name_img from users WHERE userId=" . $userId;
+            $result = mysqli_query($conn, $sql3);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $img = './image/' . $row['name_img'];
+
+                    echo "<img src='$img' style='max-width:50px ';>";
+                }
+            }
+            ?>
 
             <a href="#">
                 <i class="fa fa-bell"></i>
@@ -85,7 +95,16 @@ if (isset($_POST['subcomment'])) {
             <ul>
                 <li>
                     
-                    <img class="profile" src="<?php echo "$current_usr_img" ?>" alt="">
+                <?php
+                    $sql3 = "SELECT name_img from users WHERE userId=" . $userId;
+                    $result = mysqli_query($conn, $sql3);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $img = './image/' . $row['name_img'];
+                            echo "<img src='$img' style='max-width:50px ';>";
+                        }
+                    }
+                    ?>
                     <p> <?php echo $name ?></p>
                 </li>
                 <li>
@@ -147,7 +166,17 @@ if (isset($_POST['subcomment'])) {
             <div class="post create">
                 <div class="post-top">
                     <div class="dp">
-                        <img src="<?php echo "$current_usr_img" ?>" alt="">
+                    <?php
+                        $sql3 = "SELECT name_img from users WHERE userId=" . $userId;
+                        $result = mysqli_query($conn, $sql3);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $img = './image/' . $row['name_img'];
+
+                                echo "<img src='$img' style='max-width:90px ';>";
+                            }
+                        }
+                        ?>
                     </div>
                     <form action="" method="POST">
                         <textarea name="post_ma" placeholder="What's on your mind, Aashish ?"></textarea>
@@ -184,12 +213,11 @@ if (isset($_POST['subcomment'])) {
                     $comments_count_result = mysqli_query($conn, "SELECT COUNT(*) FROM post_comment WHERE post_id = $row[post_id]");
                     $count_row = $comments_count_result->fetch_array();
                     $comments_count = $count_row[0];
-                    $img=$row['name_img'];
-                    $img_src = "image/".$img;
+                    $img = './image/' . $row['name_img'];
      echo '<div class="post">
                 <div class="post-top">
                     <div class="dp">
-                        <img src="' . $img_src . '" alt="">
+                        <img src="' . $img . '" alt="">
                     </div>
                     <div class="post-info">' .
                         '<p class="name">' . $row['username'] . '</p>' .
@@ -221,7 +249,7 @@ if (isset($_POST['subcomment'])) {
                     while ($row2 = $res2->fetch_assoc()) {
                      echo '<div class = "comments">';
 
-                     echo " <img style = 'border: 1px solid #ddd; border-radius: 100%;  width: 40px;'src= '$img_src';";
+                     echo " <img style = 'border: 1px solid #ddd; border-radius: 100%;  width: 40px;'src= '$img';";
                      
 
                         echo "<p>  $row2[username] </p>" . "<br>" .

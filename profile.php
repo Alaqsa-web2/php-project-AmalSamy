@@ -4,6 +4,19 @@ require "config.php";
 $name = $_SESSION['username'];
 $userId = $_SESSION['user_Id'];
 $email = $_SESSION['email'];
+date_default_timezone_set('Asia/Gaza');
+$created_datetime =  date('y:m:d h:i:s a');
+
+if (isset($_POST['subcomment'])) {
+    $comment = $_POST['comment'];
+    $post_id = $_POST['post_id'];
+    if (!empty($_POST['comment'])) {
+
+        $sql = "INSERT INTO post_comment (comment_text , userId , created_datetime,post_id)
+         VALUE ('$comment' , '$userId' , '$created_datetime','$post_id')";
+        $res = mysqli_query($conn, $sql);
+    }
+}
 
 
 
@@ -73,13 +86,12 @@ $email = $_SESSION['email'];
                     $sql3 = "SELECT name_img from users WHERE userId=" . $userId;
                     $result = mysqli_query($conn, $sql3);
                     if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                            $img = $row['name_img'];
-                            $img_src = "image/" . $img;
-                            echo"<img src='$img_src'>";
-                        
-                    }
+                        while ($row = $result->fetch_assoc()) {
+                            $img = './image/' . $row['name_img'];
 
+                            echo "<img src='$img' style='max-width:200px ';>";
+                        }
+                    }
                     ?>
                     
 
@@ -114,12 +126,11 @@ $email = $_SESSION['email'];
                         $comments_count_result = mysqli_query($conn, "SELECT COUNT(*) FROM post_comment WHERE post_id = $row[post_id]");
                         $count_row = $comments_count_result->fetch_array();
                         $comments_count = $count_row[0];
-                        $img = $row['name_img'];
-                        $img_src = "image/" . $img;
+                        $img = './image/' . $row['name_img'];
                         echo '<div class="post">
     <div class="post-top">
         <div class="dp">
-            <img src="' . $img_src . '" alt="">
+            <img src="' . $img . '" alt="">
         </div>
         <div class="post-info">' .
                             '<p class="name">' . $row['username'] . '</p>' .
@@ -152,9 +163,11 @@ $email = $_SESSION['email'];
                         $res2 = mysqli_query($conn, $sql);
                         if ($res2->num_rows > 0) {
                             while ($row2 = $res2->fetch_assoc()) {
+                                $img = './image/' . $row['name_img'];
                                 echo '<div class = "comments">';
-                                echo "<span>  $row2[username] </span>" .
-                                    "<p> $row2[comment_text] </p>" .
+                              echo "<img src='$img' style='max-width:50px ';>" .
+                                    "<span>  $row2[username] </span>" . '<br>' . '<br>' .
+                                    "<p> Coment : $row2[comment_text] </p>" .
                                     "<span class = 'time'> $row2[created_datetime] </span>" . '</div>' . '<br>';
                             }
                         }

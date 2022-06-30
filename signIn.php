@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $temp = $_FILES['img']['tmp_name'];
     $arr = explode('.',$nameimg);
     $ext = end($arr);
-    $current = getcwd()."\\image\\$username.$ext";
+    $current = getcwd()."\\image\\$nameimg";
    // echo $current;
    $sql = "SELECT email FROM users WHERE email='$email' AND password = '$password'";
    $result = mysqli_query($conn,$sql);
