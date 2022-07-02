@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 02 يوليو 2022 الساعة 02:57
+-- Generation Time: 02 يوليو 2022 الساعة 04:10
 -- إصدار الخادم: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -68,7 +68,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userId`, `username`, `email`, `password`, `name_img`) VALUES
 (7, 'amal', 'a@gmail.com', 'amal', 'i.png'),
-(8, 'amalsamy', 'amal@gmail.com', 'amal', 'maxresdefault.jpg');
+(8, 'amalsamy', 'amal@gmail.com', 'amal', 'maxresdefault.jpg'),
+(9, 'a1', 'a1@gmail.com', 'amal', 'maxresdefault.jpg');
 
 -- --------------------------------------------------------
 
@@ -79,11 +80,11 @@ INSERT INTO `users` (`userId`, `username`, `email`, `password`, `name_img`) VALU
 CREATE TABLE `user_post` (
   `post_id` int(255) NOT NULL,
   `userId` int(255) NOT NULL,
-  `written_text` varchar(255) NOT NULL,
+  `written_text` varchar(255) DEFAULT NULL,
   `comments` int(255) NOT NULL,
   `likes` int(255) NOT NULL,
   `created_datetime` text NOT NULL,
-  `img_url` int(255) DEFAULT NULL
+  `img_url` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -91,12 +92,11 @@ CREATE TABLE `user_post` (
 --
 
 INSERT INTO `user_post` (`post_id`, `userId`, `written_text`, `comments`, `likes`, `created_datetime`, `img_url`) VALUES
-(1, 1, 'amal\r\n', 0, 0, '22:06:29 09:34:39 pm', NULL),
-(2, 1, 'a\r\n', 0, 0, '22:06:29 09:43:36 pm', NULL),
-(3, 1, 'a\r\n', 0, 0, '22:06:29 09:44:54 pm', NULL),
-(4, 4, 'amal', 0, 0, '22:06:30 01:58:04 am', NULL),
-(5, 5, 'مرحبا', 0, 0, '22:06:30 11:32:08 am', NULL),
-(6, 7, 'amal', 0, 0, '22:06:30 11:59:34 am', NULL);
+(42, 9, '', 0, 0, '22:07:02 04:45:05 am', ''),
+(43, 9, '', 0, 0, '22:07:02 04:45:47 am', 'amal (2).png'),
+(44, 9, 'sdfsdf', 0, 0, '22:07:02 04:45:53 am', ''),
+(45, 9, '', 0, 0, '22:07:02 04:46:04 am', 'am.jpg'),
+(46, 9, 'fsdf', 0, 0, '22:07:02 04:46:16 am', 'amal.png');
 
 --
 -- Indexes for dumped tables
@@ -137,13 +137,13 @@ ALTER TABLE `post_comment`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `userId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_post`
 --
 ALTER TABLE `user_post`
-  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
