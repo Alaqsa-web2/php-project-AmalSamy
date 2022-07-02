@@ -16,10 +16,16 @@ $created_datetime =  date('y:m:d h:i:s a');
 if (isset($_POST['btnpost'])) {
 
     $txt = $_POST['post_ma'];
+    $nameimg = $_FILES['post_img']['name'];
+    $temp = $_FILES['post_img']['tmp_name'];
+    $arr = explode('.', $nameimg);
+    $ext = end($arr);
+    $current = getcwd() . "\\image\\$nameimg";
+    move_uploaded_file($temp, $current);
     if (!empty($_POST['post_ma'])) {
 
-        $sql = "INSERT INTO user_post (written_text , userId , created_datetime ) 
-        VALUE ('$txt' , '$userId' , '$created_datetime')";
+        $sql = "INSERT INTO user_post (written_text , userId , created_datetime, img_url) 
+        VALUE ('$txt' , '$userId' , '$created_datetime', '$nameimg')";
         $res = mysqli_query($conn, $sql);
     }
 }
@@ -178,8 +184,9 @@ if (isset($_POST['subcomment'])) {
                         }
                         ?>
                     </div>
-                    <form action="" method="POST">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <textarea name="post_ma" placeholder="What's on your mind, Aashish ?"></textarea>
+                        <input type="file" name="post_img">
                         <input name="btnpost" type="submit" value="Post">
                     </form>
 
@@ -203,7 +210,7 @@ if (isset($_POST['subcomment'])) {
 
             <?php
 
-            $sql2 = "SELECT p.written_text, p.created_datetime, p.userId, p.post_id,u.username, u.name_img
+            $sql2 = "SELECT p.written_text, p.created_datetime, p.userId, p.post_id, p.img_url,u.username, u.name_img
             FROM user_post as p JOIN users as u WHERE p.userId = u.userId  ORDER BY p.created_datetime DESC";
             $res = mysqli_query($conn, $sql2);
  
@@ -213,6 +220,7 @@ if (isset($_POST['subcomment'])) {
                     $comments_count_result = mysqli_query($conn, "SELECT COUNT(*) FROM post_comment WHERE post_id = $row[post_id]");
                     $count_row = $comments_count_result->fetch_array();
                     $comments_count = $count_row[0];
+                    $post_img = './image/' . $row['img_url'];
                     $img = './image/' . $row['name_img'];
      echo '<div class="post">
                 <div class="post-top">
@@ -230,7 +238,11 @@ if (isset($_POST['subcomment'])) {
                         $row['written_text'] . 
             '</div>'.
         
-            '<div>
+            '
+            <div>
+            <img src="' . $post_img . '" style="max-width: 400px" alt="">
+    </div>
+            <div>
                 <span style= margin:5px>' . $comments_count . '</span>    
                 <i class="far fa-comment"></i>
                 <span>Comments</span>
