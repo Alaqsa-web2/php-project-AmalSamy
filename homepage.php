@@ -42,7 +42,7 @@ if (isset($_POST['subcomment'])) {
 
 }
 if (isset($_POST['delete'])){
-    $sql = "DELETE FROM user_post WHERE post_id = " . $_POST['post_id'];
+    $sql = "DELETE FROM user_post WHERE post_id = " . $_POST['post_id'] ;
     $res = mysqli_query($conn, $sql);
 }
 
@@ -236,13 +236,18 @@ if (isset($_POST['delete'])){
                     <div class="post-info">' .
                         '<p class="name">' . $row['username'] . '</p>' .
                         '<span class="time">' . $row['created_datetime'] . '</span>' .
-                    '</div>
-                <i >
-                <form action="" method="post">
-                <input type="hidden" name="post_id" value=' . $row['post_id'] . '>
+                    '</div>';
+                    if($userId == $row['userId']){
+                        echo '
+                        <i >
+                        <form action="" method="post">
+                        <input type="hidden" name="post_id" value=' . $row['post_id'] . '>
                     <input type="submit" name="delete" value="Delete post">
                     </form>
-</i>
+</i>';
+                }
+                echo '
+                
                 </div>
             
             <div class="post-content">' .
