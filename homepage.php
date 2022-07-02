@@ -22,8 +22,9 @@ if (isset($_POST['btnpost'])) {
     $ext = end($arr);
     $current = getcwd() . "\\image\\$nameimg";
     move_uploaded_file($temp, $current);
-    if (!empty($_POST['post_ma'])) {
 
+    if (!empty($_POST['post_ma'] or !empty($_FILES['post_img']['name']))) {
+        
         $sql = "INSERT INTO user_post (written_text , userId , created_datetime, img_url) 
         VALUE ('$txt' , '$userId' , '$created_datetime', '$nameimg')";
         $res = mysqli_query($conn, $sql);
